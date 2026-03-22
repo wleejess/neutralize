@@ -50,6 +50,7 @@ async function callClaude(
     headers: {
       'x-api-key': apiKey,
       'anthropic-version': '2023-06-01',
+      'anthropic-dangerous-direct-browser-access': 'true',
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
@@ -66,11 +67,13 @@ async function callClaude(
   });
 
   if (!response.ok) {
+    const body = await response.text();
+    console.error('Anthropic error body:', body);
     throw new Error(`API error: ${response.status}`);
   }
 
   const data = await response.json();
-  const raw = data.content[0].text;
+  const raw = data.content[0].text.replace(/^```json\s*/i, '').replace(/```\s*$/, '').trim();
   console.log('Raw Claude response:', raw);
   return JSON.parse(raw) as AnalysisResult;
 }
@@ -82,6 +85,8 @@ function sendToSidePanel(message: ExtensionMessage) {
 }
 
 chrome.runtime.onMessage.addListener((message: ExtensionMessage) => {
+  console.log('Background received message:', message.type);
+
   if (message.type === 'SELECTION_TOO_LONG') {
     sendToSidePanel({ type: 'SELECTION_TOO_LONG' });
     return;
@@ -94,14 +99,17 @@ chrome.runtime.onMessage.addListener((message: ExtensionMessage) => {
       const apiKey = result['apiKey'];
 
       if (!apiKey) {
+        console.log('No API key found — sending NO_API_KEY');
         sendToSidePanel({ type: 'NO_API_KEY' });
         return;
       }
 
       try {
+        console.log('Calling Claude with key ending in:', apiKey.slice(-4));
         const analysisResult = await callClaude(apiKey, text, pageTitle, domain);
         sendToSidePanel({ type: 'ANALYSIS_RESULT', payload: analysisResult });
       } catch (err) {
+        console.error('Claude call failed:', err);
         const msg = err instanceof Error ? err.message : 'Unknown error';
         sendToSidePanel({ type: 'ANALYSIS_ERROR', message: msg });
       }
