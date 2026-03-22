@@ -1,23 +1,26 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import type { AnalysisResult, ExtensionMessage } from '@extension/shared';
 import { EmptyState } from './EmptyState';
 import { LoadingState } from './LoadingState';
+import { AnnotatedText } from './AnnotatedText';
 
 type PanelState =
   | { status: 'empty' }
   | { status: 'loading' }
   | { status: 'no_api_key' }
   | { status: 'too_long' }
-  | { status: 'result'; data: AnalysisResult }
+  | { status: 'result'; data: AnalysisResult; originalText: string }
   | { status: 'error'; message: string };
 
 const SidePanel: React.FC = () => {
   const [state, setState] = useState<PanelState>({ status: 'empty' });
+  const lastSelectedText = useRef<string>('');
 
   useEffect(() => {
     const listener = (message: ExtensionMessage) => {
       switch (message.type) {
         case 'TEXT_SELECTED':
+          lastSelectedText.current = message.text;
           setState({ status: 'loading' });
           break;
         case 'NO_API_KEY':
@@ -27,7 +30,7 @@ const SidePanel: React.FC = () => {
           setState({ status: 'too_long' });
           break;
         case 'ANALYSIS_RESULT':
-          setState({ status: 'result', data: message.payload });
+          setState({ status: 'result', data: message.payload, originalText: lastSelectedText.current });
           break;
         case 'ANALYSIS_ERROR':
           setState({ status: 'error', message: message.message });
@@ -120,9 +123,11 @@ const SidePanel: React.FC = () => {
 
   if (state.status === 'result') {
     return (
-      <div style={containerStyle}>
-        <p style={labelStyle}>Analysis ready</p>
-        <p style={textStyle}>Result received — AnnotatedText + AnalysisResult components coming in step 6–7.</p>
+      <div style={{ ...containerStyle, justifyContent: 'flex-start', alignItems: 'stretch', overflowY: 'auto' }}>
+        <AnnotatedText
+          text={state.originalText}
+          annotations={state.data.annotations}
+        />
       </div>
     );
   }
