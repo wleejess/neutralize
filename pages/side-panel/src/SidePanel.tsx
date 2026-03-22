@@ -3,6 +3,7 @@ import type { AnalysisResult, ExtensionMessage } from '@extension/shared';
 import { EmptyState } from './EmptyState';
 import { LoadingState } from './LoadingState';
 import { AnnotatedText } from './AnnotatedText';
+import { AnalysisResultView } from './AnalysisResult';
 
 type PanelState =
   | { status: 'empty' }
@@ -52,7 +53,21 @@ const SidePanel: React.FC = () => {
     return <LoadingState />;
   }
 
-  // Placeholder renders for states built in later steps
+  const resultContainerStyle: React.CSSProperties = {
+    height: '100%',
+    backgroundColor: '#e8dfe0',
+    fontFamily: "'Instrument Sans', sans-serif",
+    padding: '20px 16px',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '16px',
+    overflowY: 'auto',
+  };
+
+  const dividerStyle: React.CSSProperties = {
+    borderTop: '1px solid rgba(143,91,52,0.2)',
+  };
+
   const containerStyle: React.CSSProperties = {
     height: '100%',
     backgroundColor: '#e8dfe0',
@@ -123,11 +138,13 @@ const SidePanel: React.FC = () => {
 
   if (state.status === 'result') {
     return (
-      <div style={{ ...containerStyle, justifyContent: 'flex-start', alignItems: 'stretch', overflowY: 'auto' }}>
+      <div style={resultContainerStyle}>
         <AnnotatedText
           text={state.originalText}
           annotations={state.data.annotations}
         />
+        <div style={dividerStyle} />
+        <AnalysisResultView data={state.data} />
       </div>
     );
   }
