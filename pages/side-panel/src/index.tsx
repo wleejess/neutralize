@@ -1,4 +1,4 @@
-import '@src/index.css';
+import React from 'react';
 import SidePanel from '@src/SidePanel';
 import { createRoot } from 'react-dom/client';
 
