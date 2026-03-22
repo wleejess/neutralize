@@ -15,6 +15,9 @@ const manifest = {
   },
   version: packageJson.version,
   description: '__MSG_extensionDescription__',
+  content_security_policy: {
+    extension_pages: "script-src 'self'; object-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com",
+  },
   host_permissions: ['<all_urls>'],
   permissions: ['storage', 'scripting', 'tabs', 'notifications', 'sidePanel'],
   options_page: 'options/index.html',
