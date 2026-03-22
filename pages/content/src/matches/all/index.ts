@@ -1,5 +1,21 @@
-import { sampleFunction } from '@src/sample-function';
+const CHAR_LIMIT = 600;
 
-console.log('[CEB] All content script loaded');
+document.addEventListener('mouseup', () => {
+  const selection = window.getSelection();
+  if (!selection) return;
 
-void sampleFunction();
+  const text = selection.toString().trim();
+  if (!text) return;
+
+  if (text.length > CHAR_LIMIT) {
+    chrome.runtime.sendMessage({ type: 'SELECTION_TOO_LONG' });
+    return;
+  }
+
+  chrome.runtime.sendMessage({
+    type: 'TEXT_SELECTED',
+    text,
+    pageTitle: document.title,
+    domain: window.location.hostname,
+  });
+});
