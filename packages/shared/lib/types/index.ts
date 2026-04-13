@@ -1,7 +1,10 @@
 export interface AnnotationLayer {
-  appeals: string | null;
-  structural: string | null;
-  meaning: string | null;
+  amplification: string | null;
+  emotion: string | null;
+  loaded_language: string | null;
+  hedging: string | null;
+  presupposition: string | null;
+  call_to_action: string | null;
 }
 
 export interface Synonym {
@@ -28,4 +31,15 @@ export type ExtensionMessage =
   | { type: 'SELECTION_TOO_LONG' }
   | { type: 'ANALYSIS_RESULT'; payload: AnalysisResult }
   | { type: 'NO_API_KEY' }
-  | { type: 'ANALYSIS_ERROR'; message: string };
+  | { type: 'ANALYSIS_ERROR'; message: string }
+  | { type: 'GET_CURRENT_STATE' };
+
+// Snapshot of the panel state, returned by the background in response to GET_CURRENT_STATE.
+// Used by the Firefox popup to hydrate its state on open.
+export type BackgroundStateMessage =
+  | { status: 'empty' }
+  | { status: 'loading' }
+  | { status: 'no_api_key' }
+  | { status: 'too_long' }
+  | { status: 'result'; data: AnalysisResult; originalText: string }
+  | { status: 'error'; message: string };

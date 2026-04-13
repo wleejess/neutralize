@@ -1,5 +1,5 @@
 import setRelatedLocaleImports from './set-related-locale-import.js';
-import { IS_DEV } from '@extension/env';
+import { IS_DEV, DIST_DIR } from '@extension/env';
 import { cpSync, existsSync, mkdirSync } from 'node:fs';
 import { resolve } from 'node:path';
 
@@ -7,7 +7,7 @@ import { resolve } from 'node:path';
   const i18nPath = IS_DEV ? 'lib/i18n-dev.ts' : 'lib/i18n-prod.ts';
   cpSync(i18nPath, resolve('lib', 'i18n.ts'));
 
-  const outDir = resolve(import.meta.dirname, '..', '..', '..', '..', 'dist');
+  const outDir = resolve(import.meta.dirname, '..', '..', '..', '..', DIST_DIR);
   if (!existsSync(outDir)) {
     mkdirSync(outDir);
   }

@@ -22,11 +22,11 @@ const Options = () => {
   return (
     <div style={styles.page}>
       <div style={styles.card}>
-        <h1 style={styles.title}>Neutralize</h1>
-        <p style={styles.subtitle}>Settings</p>
+        <div style={styles.wordmark}>NEUTRALIZE</div>
+        <div style={styles.subtitle}>// SETTINGS</div>
 
         <label style={styles.label} htmlFor="apiKey">
-          Anthropic API Key
+          ANTHROPIC API KEY
         </label>
         <input
           id="apiKey"
@@ -49,10 +49,10 @@ const Options = () => {
         </p>
 
         <button onClick={handleSave} style={styles.button}>
-          Save
+          SAVE KEY
         </button>
 
-        {saved && <p style={styles.confirmation}>API key saved</p>}
+        {saved && <p style={styles.confirmation}>✓ API key saved</p>}
       </div>
     </div>
   );
@@ -62,72 +62,82 @@ const styles: Record<string, React.CSSProperties> = {
   page: {
     width: '100vw',
     height: '100vh',
-    backgroundColor: '#e8dfe0',
+    backgroundColor: '#2A1F2E',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    fontFamily: "'Instrument Sans', sans-serif",
+    fontFamily: 'monospace',
   },
   card: {
-    backgroundColor: '#f5efef',
-    borderRadius: '12px',
+    backgroundColor: '#3A2A40',
+    border: '1px solid #6A5478',
+    borderRadius: '4px',
     padding: '40px 48px',
-    width: '400px',
-    boxShadow: '0 2px 12px rgba(0,0,0,0.08)',
+    width: '420px',
   },
-  title: {
+  wordmark: {
+    fontSize: '20px',
+    fontWeight: '700',
+    color: '#E8DDF0',
+    letterSpacing: '4px',
     margin: '0 0 4px',
-    fontSize: '22px',
-    fontWeight: 600,
-    color: '#3b2a2a',
   },
   subtitle: {
-    margin: '0 0 28px',
-    fontSize: '14px',
-    color: '#7a5c5c',
+    fontSize: '9px',
+    color: '#C8885A',
+    letterSpacing: '2px',
+    borderLeft: '2px solid #C8885A',
+    paddingLeft: '10px',
+    margin: '0 0 32px',
   },
   label: {
     display: 'block',
-    fontSize: '13px',
-    fontWeight: 500,
-    color: '#3b2a2a',
+    fontSize: '9px',
+    fontWeight: '700',
+    color: '#A090B0',
+    letterSpacing: '1.5px',
     marginBottom: '8px',
   },
   input: {
     width: '100%',
-    padding: '10px 12px',
-    fontSize: '14px',
-    border: '1px solid #c9b8b8',
-    borderRadius: '8px',
-    backgroundColor: '#fff',
-    color: '#3b2a2a',
+    padding: '9px 12px',
+    fontSize: '11px',
+    border: '1px solid #6A5478',
+    borderRadius: '4px',
+    backgroundColor: '#2A1F2E',
+    color: '#E8DDF0',
     outline: 'none',
     boxSizing: 'border-box',
-    fontFamily: "'Instrument Sans', sans-serif",
+    fontFamily: 'monospace',
+    letterSpacing: '1px',
   },
   hint: {
-    fontSize: '12px',
-    color: '#7a5c5c',
-    margin: '8px 0 20px',
+    fontSize: '11px',
+    color: '#A090B0',
+    margin: '8px 0 24px',
+    letterSpacing: '0.5px',
   },
   link: {
-    color: '#8f5b34',
+    color: '#C8885A',
+    textDecoration: 'none',
   },
   button: {
-    backgroundColor: '#8f5b34',
-    color: '#fff',
-    border: 'none',
-    borderRadius: '8px',
-    padding: '10px 24px',
-    fontSize: '14px',
-    fontWeight: 500,
+    backgroundColor: '#C8885A',
+    color: '#2A1F2E',
+    border: '1px solid #C8885A',
+    borderRadius: '4px',
+    padding: '9px 24px',
+    fontSize: '11px',
+    letterSpacing: '2px',
     cursor: 'pointer',
-    fontFamily: "'Instrument Sans', sans-serif",
+    fontFamily: 'monospace',
+    fontWeight: '700',
   },
   confirmation: {
     marginTop: '12px',
-    fontSize: '13px',
-    color: '#5a7a4a',
+    fontSize: '10px',
+    color: '#6ABFAA',
+    letterSpacing: '1px',
   },
 };
 

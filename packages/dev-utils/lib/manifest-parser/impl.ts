@@ -22,6 +22,13 @@ const convertToFirefoxCompatibleManifest = (manifest: ManifestType) => {
     extension_pages: "script-src 'self'; object-src 'self'",
   };
   manifestCopy.permissions = (manifestCopy.permissions as string[]).filter(value => value !== 'sidePanel');
+  // Firefox uses sidebar_action instead of sidePanel
+  manifestCopy.sidebar_action = {
+    default_panel: 'side-panel/index.html',
+    default_title: '__MSG_extensionName__',
+    default_icon: manifest.icons ?? {},
+    open_at_install: false,
+  };
 
   delete manifestCopy.options_page;
   delete manifestCopy.side_panel;

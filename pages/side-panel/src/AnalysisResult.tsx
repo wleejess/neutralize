@@ -1,18 +1,16 @@
-import React from 'react';
 import type { AnalysisResult } from '@extension/shared';
+import type React from 'react';
 
 interface AnalysisResultProps {
   data: AnalysisResult;
 }
 
-export const AnalysisResultView: React.FC<AnalysisResultProps> = ({ data }) => {
+const AnalysisResultView: React.FC<AnalysisResultProps> = ({ data }) => {
   if (data.is_factual) {
     return (
       <div style={shellStyle}>
-        <div style={labelStyle}>Factual statement</div>
-        <p style={bodyStyle}>
-          This appears to be a straightforward factual statement. No rhetorical devices detected.
-        </p>
+        <div style={labelStyle}>FACTUAL</div>
+        <p style={bodyStyle}>No rhetorical devices detected. This appears to be a straightforward factual statement.</p>
       </div>
     );
   }
@@ -20,62 +18,91 @@ export const AnalysisResultView: React.FC<AnalysisResultProps> = ({ data }) => {
   if (!data.neutral_rewrite) {
     return (
       <div style={shellStyle}>
-        <div style={labelStyle}>Subjective / Speculative</div>
+        <div style={labelStyle}>SUBJECTIVE / SPECULATIVE</div>
         <p style={bodyStyle}>{data.not_neutralizable_reason}</p>
-        <p style={noteStyle}>
-          This statement reflects the author's opinion or speculation and cannot be made objective.
-        </p>
+        <p style={noteStyle}>This statement reflects opinion or speculation and cannot be made fully objective.</p>
       </div>
     );
   }
 
   return (
-    <div style={shellStyle}>
-      <div style={labelStyle}>Neutral rewrite</div>
-      <p style={rewriteStyle}>{data.neutral_rewrite}</p>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+      <div style={resolvedShellStyle}>
+        <div style={resolvedLabelStyle}>RESOLVED · NEUTRAL REWRITE</div>
+        <p style={rewriteStyle}>{data.neutral_rewrite}</p>
+      </div>
       {data.rewrite_explanation && (
-        <p style={bodyStyle}>{data.rewrite_explanation}</p>
+        <div style={shellStyle}>
+          <div style={labelStyle}>REWRITE EXPLANATION</div>
+          <p style={bodyStyle}>{data.rewrite_explanation}</p>
+        </div>
       )}
     </div>
   );
 };
 
+// v2 warm mauve surface/border
 const shellStyle: React.CSSProperties = {
-  backgroundColor: 'rgba(255,255,255,0.6)',
-  borderRadius: '8px',
-  padding: '14px 16px',
+  backgroundColor: '#3A2A40',
+  border: '1px solid #6A5478',
+  borderRadius: '4px',
+  padding: '12px 14px',
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '8px',
+};
+
+// resolved: v2 token bg #143028, text #6ABFAA
+const resolvedShellStyle: React.CSSProperties = {
+  backgroundColor: '#143028',
+  border: '1px solid #6ABFAA',
+  borderRadius: '4px',
+  padding: '12px 14px',
   display: 'flex',
   flexDirection: 'column',
   gap: '8px',
 };
 
 const labelStyle: React.CSSProperties = {
-  fontSize: '11px',
+  fontSize: '9px',
   fontWeight: '700',
-  color: '#8f5b34',
-  textTransform: 'uppercase',
-  letterSpacing: '0.07em',
+  color: '#A090B0',
+  letterSpacing: '1.5px',
+  fontFamily: 'monospace',
+};
+
+const resolvedLabelStyle: React.CSSProperties = {
+  fontSize: '9px',
+  fontWeight: '700',
+  color: '#6ABFAA',
+  letterSpacing: '1.5px',
+  fontFamily: 'monospace',
 };
 
 const rewriteStyle: React.CSSProperties = {
   fontSize: '14px',
-  color: '#3a2218',
-  lineHeight: '1.6',
+  color: '#E8DDF0',
+  lineHeight: '1.65',
   margin: 0,
   fontStyle: 'italic',
+  fontFamily: 'system-ui, -apple-system, sans-serif',
 };
 
 const bodyStyle: React.CSSProperties = {
   fontSize: '13px',
-  color: '#4a3228',
-  lineHeight: '1.5',
+  color: '#C8B8D8',
+  lineHeight: '1.6',
   margin: 0,
+  fontFamily: 'system-ui, -apple-system, sans-serif',
 };
 
 const noteStyle: React.CSSProperties = {
   fontSize: '12px',
-  color: '#8f6b5a',
+  color: '#A090B0',
   lineHeight: '1.4',
   margin: 0,
   fontStyle: 'italic',
+  fontFamily: 'system-ui, -apple-system, sans-serif',
 };
+
+export { AnalysisResultView };
