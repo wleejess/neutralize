@@ -1,7 +1,7 @@
 import { resolve } from 'node:path';
 import { makeEntryPointPlugin } from '@extension/hmr';
 import { getContentScriptEntries, withPageConfig } from '@extension/vite-config';
-import { IS_DEV } from '@extension/env';
+import { IS_DEV, DIST_DIR } from '@extension/env';
 import { build } from 'vite';
 
 const rootDir = resolve(import.meta.dirname);
@@ -25,15 +25,17 @@ const configs = Object.entries(getContentScriptEntries(matchesDir)).map(([name, 
         entry,
         fileName: name,
       },
-      outDir: resolve(rootDir, '..', '..', 'dist', 'content'),
+      outDir: resolve(rootDir, '..', '..', DIST_DIR, 'content'),
     },
   }),
 );
 
-const builds = configs.map(async config => {
+for (const [i, config] of configs.entries()) {
   //@ts-expect-error This is hidden property into vite's resolveConfig()
   config.configFile = false;
+  if (i > 0) {
+    // Prevent later builds from wiping files written by earlier builds into the shared outDir
+    config.build = { ...config.build, emptyOutDir: false };
+  }
   await build(config);
-});
-
-await Promise.all(builds);
+}

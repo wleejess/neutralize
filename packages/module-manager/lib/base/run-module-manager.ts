@@ -1,4 +1,4 @@
-import manifest from '../../../../chrome-extension/manifest.js';
+import manifest from '../../../../extension/manifest.js';
 import { MANAGER_ACTION_PROMPT_CONFIG } from '../const.js';
 import { promptSelection } from '../helpers/utils.js';
 import { deleteFeature, recoverFeature } from '../processing/index.js';
@@ -8,7 +8,7 @@ import { resolve } from 'node:path';
 import type { CliActionType, ModuleNameType } from '../types.js';
 import type { ManifestType } from '@extension/shared';
 
-const manifestPath = resolve(import.meta.dirname, '..', '..', '..', '..', 'chrome-extension', 'manifest.ts');
+const manifestPath = resolve(import.meta.dirname, '..', '..', '..', '..', 'extension', 'manifest.ts');
 
 const manifestObject = JSON.parse(JSON.stringify(manifest)) as ManifestType;
 const manifestString = readFileSync(manifestPath, 'utf-8');
@@ -41,7 +41,7 @@ export const runModuleManager = async (moduleName?: ModuleNameType, action?: Cli
       cwd: resolve('..', '..'),
     });
 
-    execSync('pnpm -F chrome-extension lint:fix', {
+    execSync('pnpm -F extension lint:fix', {
       stdio: 'inherit',
       cwd: resolve('..', '..'),
     });

@@ -9,27 +9,38 @@ const manifest = {
   name: '__MSG_extensionName__',
   browser_specific_settings: {
     gecko: {
-      id: 'example@example.com',
+      // Gecko ID — must remain consistent across all future updates.
+      // This ID is embedded in the distributed .xpi and visible to anyone who inspects it.
+      id: 'neutralize@wleejess.github.io',
       strict_min_version: '109.0',
     },
   },
   version: packageJson.version,
   description: '__MSG_extensionDescription__',
   content_security_policy: {
-    extension_pages: "script-src 'self'; object-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com",
+    extension_pages: "script-src 'self'; object-src 'self'",
   },
   host_permissions: ['<all_urls>'],
-  permissions: ['storage', 'scripting', 'tabs', 'notifications', 'sidePanel'],
+  permissions: ['storage', 'scripting', 'tabs', 'notifications', 'sidePanel', 'webNavigation'],
   options_page: 'options/index.html',
   background: {
     service_worker: 'background.js',
     type: 'module',
   },
   action: {
-    default_icon: 'icon-34.png',
+    default_icon: {
+      '16': 'icon-16.png',
+      '32': 'icon-32.png',
+      '48': 'icon-48.png',
+      '128': 'icon-128.png',
+    },
   },
   icons: {
+    '16': 'icon-16.png',
+    '32': 'icon-32.png',
+    '48': 'icon-48.png',
     '128': 'icon-128.png',
+    '512': 'icon-512.png',
   },
   content_scripts: [
     {
@@ -39,7 +50,7 @@ const manifest = {
   ],
   web_accessible_resources: [
     {
-      resources: ['*.js', '*.css', '*.svg', 'icon-128.png', 'icon-34.png'],
+      resources: ['*.js', '*.css', '*.svg', '*.png'],
       matches: ['*://*/*'],
     },
   ],

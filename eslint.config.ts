@@ -1,3 +1,4 @@
+/* eslint-disable import-x/no-deprecated -- boilerplate config, not yet migrated to defineConfig() */
 import { fixupConfigRules } from '@eslint/compat';
 import { FlatCompat } from '@eslint/eslintrc';
 import js from '@eslint/js';
@@ -25,7 +26,7 @@ export default config(
   },
   // Custom config
   {
-    ignores: ['**/build/**', '**/dist/**', '**/node_modules/**', 'chrome-extension/manifest.js'],
+    ignores: ['**/build/**', '**/dist/**', '**/node_modules/**', 'extension/manifest.js'],
   },
   {
     files: ['**/*.{ts,tsx}'],

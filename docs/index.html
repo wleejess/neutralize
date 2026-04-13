@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Neutralize — See through the language</title>
+  <meta name="description" content="Highlight text on any webpage to reveal rhetorical techniques and get a neutral rewrite. Powered by Claude AI." />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #f5eeeb;
+      color: #3a2218;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      line-height: 1.6;
+    }
+
+    /* Nav */
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 40px;
+      background: #3a2218;
+    }
+
+    .nav-logo {
+      font-size: 20px;
+      font-weight: 700;
+      color: #e8dfe0;
+      text-decoration: none;
+      letter-spacing: -0.02em;
+    }
+
+    .nav-links { display: flex; gap: 24px; }
+    .nav-links a {
+      font-size: 14px;
+      color: rgba(232,223,224,0.7);
+      text-decoration: none;
+    }
+    .nav-links a:hover { color: #e8dfe0; }
+
+    /* Hero */
+    .hero {
+      text-align: center;
+      padding: 96px 24px 80px;
+      max-width: 760px;
+      margin: 0 auto;
+    }
+
+    .badge {
+      display: inline-block;
+      background: rgba(143,91,52,0.12);
+      color: #8f5b34;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 100px;
+      margin-bottom: 24px;
+    }
+
+    h1 {
+      font-size: clamp(2rem, 5vw, 3.25rem);
+      font-weight: 800;
+      color: #3a2218;
+      margin: 0 0 20px;
+      line-height: 1.15;
+      letter-spacing: -0.03em;
+    }
+
+    .hero p {
+      font-size: 1.15rem;
+      color: #6b4c3b;
+      max-width: 560px;
+      margin: 0 auto 40px;
+      line-height: 1.65;
+    }
+
+    .cta-group {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 13px 24px;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: opacity 0.15s;
+    }
+    .btn:hover { opacity: 0.85; }
+
+    .btn-primary { background: #8f5b34; color: #fff; }
+    .btn-secondary {
+      background: transparent;
+      color: #8f5b34;
+      border: 1.5px solid #8f5b34;
+    }
+
+    /* Features */
+    .features {
+      padding: 80px 24px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      text-align: center;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #8f5b34;
+      margin-bottom: 12px;
+    }
+
+    .features h2 {
+      text-align: center;
+      font-size: 2rem;
+      font-weight: 700;
+      color: #3a2218;
+      margin: 0 0 56px;
+      letter-spacing: -0.02em;
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 24px;
+    }
+
+    .feature-card {
+      background: rgba(255,255,255,0.7);
+      border: 1px solid rgba(143,91,52,0.12);
+      border-radius: 12px;
+      padding: 28px 24px;
+    }
+
+    .feature-icon {
+      font-size: 28px;
+      margin-bottom: 14px;
+      display: block;
+    }
+
+    .feature-card h3 {
+      font-size: 16px;
+      font-weight: 700;
+      color: #3a2218;
+      margin: 0 0 8px;
+    }
+
+    .feature-card p {
+      font-size: 14px;
+      color: #6b4c3b;
+      margin: 0;
+      line-height: 1.6;
+    }
+
+    /* How it works */
+    .how {
+      background: #3a2218;
+      padding: 80px 24px;
+    }
+
+    .how-inner {
+      max-width: 720px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .how h2 {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #e8dfe0;
+      margin: 0 0 56px;
+      letter-spacing: -0.02em;
+    }
+
+    .steps {
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+      text-align: left;
+    }
+
+    .step {
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+    }
+
+    .step-num {
+      flex-shrink: 0;
+      width: 36px;
+      height: 36px;
+      background: #8f5b34;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .step-content h3 {
+      font-size: 16px;
+      font-weight: 600;
+      color: #e8dfe0;
+      margin: 0 0 4px;
+    }
+
+    .step-content p {
+      font-size: 14px;
+      color: rgba(232,223,224,0.65);
+      margin: 0;
+      line-height: 1.55;
+    }
+
+    /* Privacy callout */
+    .privacy-section {
+      padding: 64px 24px;
+      max-width: 720px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .privacy-section h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #3a2218;
+      margin: 0 0 16px;
+    }
+
+    .privacy-section p {
+      font-size: 15px;
+      color: #6b4c3b;
+      margin: 0 0 12px;
+    }
+
+    .privacy-section a { color: #8f5b34; }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid rgba(143,91,52,0.15);
+      padding: 32px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 13px;
+      color: #8f6b5a;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    footer a { color: #8f6b5a; text-decoration: none; }
+    footer a:hover { color: #3a2218; }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a class="nav-logo" href="./">Neutralize</a>
+    <div class="nav-links">
+      <a href="https://github.com/wleejess/neutralize" target="_blank" rel="noreferrer">GitHub</a>
+      <a href="./privacy/">Privacy</a>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <span class="badge">Free &amp; Open Source</span>
+    <h1>See through the language.</h1>
+    <p>Neutralize highlights rhetorical techniques in any text you select — emotional appeals, loaded language, structural devices — and rewrites it neutrally. Powered by Claude AI.</p>
+    <div class="cta-group">
+      <a class="btn btn-primary" href="https://chromewebstore.google.com" target="_blank" rel="noreferrer">Add to Chrome</a>
+      <a class="btn btn-secondary" href="https://addons.mozilla.org" target="_blank" rel="noreferrer">Add to Firefox</a>
+    </div>
+  </section>
+
+  <section class="features">
+    <p class="section-label">What you get</p>
+    <h2>Built for critical readers</h2>
+    <div class="feature-grid">
+      <div class="feature-card">
+        <span class="feature-icon">🎨</span>
+        <h3>Color-coded annotations</h3>
+        <p>Rhetorical techniques are highlighted directly in your selected text — appeals, structural devices, and loaded language, each in a distinct color.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">✏️</span>
+        <h3>Neutral rewrite</h3>
+        <p>Every analysis includes a plain, objective version of the text, plus an explanation of what the original author was doing and why.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">💬</span>
+        <h3>Word-level tooltips</h3>
+        <p>Click any highlighted word to see a breakdown of its rhetorical role and alternative words that carry different connotations.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">🔒</span>
+        <h3>Your data stays local</h3>
+        <p>Your API key is stored only on your device. No accounts, no tracking, no analytics. Text is sent only to Anthropic's API for analysis.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">🦊</span>
+        <h3>Chrome &amp; Firefox</h3>
+        <p>Available as a side panel on Chrome and a popup on Firefox. Same analysis engine, same results, on every major browser.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">🎓</span>
+        <h3>High school reading level</h3>
+        <p>Explanations are written to be accessible, not academic. Designed for students, journalists, and anyone who reads critically.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="how">
+    <div class="how-inner">
+      <h2>How it works</h2>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <h3>Add your Anthropic API key</h3>
+            <p>Open the extension settings and paste your key from console.anthropic.com. It's stored locally — never sent anywhere except Anthropic's own API.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <h3>Highlight 3–5 sentences</h3>
+            <p>Select any text on any webpage — news articles, opinion pieces, social media posts, political speeches. Keep it to a few sentences for best results.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <h3>Read the analysis</h3>
+            <p>The panel opens with your text color-coded by technique. Click highlighted words for detail. Scroll down for the neutral rewrite and explanation.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="privacy-section">
+    <h2>Privacy first</h2>
+    <p>Neutralize collects zero personal data. No accounts. No analytics. No tracking.</p>
+    <p>The only external request made is sending your selected text to the Anthropic API — directly from your browser, not through any intermediate server.</p>
+    <p><a href="./privacy/">Read the full privacy policy →</a></p>
+  </section>
+
+  <footer>
+    <span>&copy; 2026 Neutralize</span>
+    <span>
+      <a href="https://github.com/wleejess/neutralize" target="_blank" rel="noreferrer">GitHub</a> &nbsp;·&nbsp;
+      <a href="./privacy/">Privacy Policy</a>
+    </span>
+  </footer>
+
+</body>
+</html>
