@@ -1,0 +1,75 @@
+{
+  "meta": {
+    "product": "Neutralize",
+    "version": "2.5.0",
+    "theme": "Warm Mauve (dark) + Warm Cream (light)",
+    "intent": "Gentle, welcoming palette for critical thinking and rhetorical analysis"
+  },
+  "base": {
+    "dark": {
+      "bg": "#2A1F2E",
+      "surface": "#3A2A40",
+      "raised": "#4A3854",
+      "border": "#6A5478",
+      "muted": "#A090B0",
+      "text": "#C8B8D8",
+      "title": "#E8DDF0"
+    },
+    "light": {
+      "bg": "#FAF6F0",
+      "surface": "#F0E8D8",
+      "raised": "#E4D8C4",
+      "border": "#C8B8A0",
+      "muted": "#8A7860",
+      "text": "#4A3828",
+      "title": "#2A1810"
+    }
+  },
+  "rhetoric": {
+    "amplification": {
+      "dark": { "bg": "#3A2808", "text": "#E8B86D" },
+      "light": { "bg": "#FFF0CC", "text": "#7A5000" },
+      "cue": "solid underline"
+    },
+    "emotion": {
+      "dark": { "bg": "#1C2A38", "text": "#7BAFD4" },
+      "light": { "bg": "#D8EAF8", "text": "#1A4888" },
+      "cue": "none"
+    },
+    "loaded_language": {
+      "dark": { "bg": "#301828", "text": "#C48BB8" },
+      "light": { "bg": "#F0DCEA", "text": "#6A2068" },
+      "cue": "dotted underline"
+    },
+    "call_to_action": {
+      "dark": { "bg": "#301E14", "text": "#E8906A" },
+      "light": { "bg": "#FFE8D4", "text": "#8A3800" },
+      "cue": "double underline"
+    },
+    "resolved": {
+      "dark": { "bg": "#143028", "text": "#6ABFAA" },
+      "light": { "bg": "#D4F0E4", "text": "#1A6040" },
+      "cue": "wavy underline"
+    },
+    "presupposition": {
+      "dark": { "bg": "#281630", "text": "#A88CC8" },
+      "light": { "bg": "#EAE0F8", "text": "#4A1880" },
+      "cue": "solid underline"
+    },
+    "hedging": {
+      "dark": { "bg": "#1C2418", "text": "#90B878" },
+      "light": { "bg": "#E0ECD8", "text": "#2A4818" },
+      "cue": "dashed underline"
+    }
+  },
+  "accent": {
+    "warm": { "dark": "#C8885A", "light": "#8A4820" },
+    "cool": { "dark": "#8ABCD4", "light": "#2A5878" }
+  },
+  "state": {
+    "success": { "dark": "#6ABF8A", "light": "#2A6840" },
+    "warning": { "dark": "#D4A85A", "light": "#7A5818" },
+    "error": { "dark": "#C87878", "light": "#8A2828" },
+    "info": { "dark": "#A890C8", "light": "#4A2878" }
+  }
+}

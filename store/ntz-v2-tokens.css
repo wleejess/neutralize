@@ -1,0 +1,181 @@
+/* ============================================================
+   NEUTRALIZE v2.5 — Warm Mauve + Cream Token System
+   Gentle, welcoming palette for critical thinking tool
+   WCAG AA compliant throughout
+   ============================================================ */
+
+/* ── DARK MODE — Warm Mauve ──────────────────────────────── */
+:root {
+  /* Base */
+  --ntz-bg:              #2A1F2E;
+  --ntz-surface:         #3A2A40;
+  --ntz-raised:          #4A3854;
+  --ntz-border:          #6A5478;
+  --ntz-muted:           #A090B0;
+  --ntz-text:            #C8B8D8;
+  --ntz-title:           #E8DDF0;
+
+  /* Accent */
+  --ntz-accent-warm:     #C8885A;
+  --ntz-accent-cool:     #8ABCD4;
+
+  /* State */
+  --ntz-success:         #6ABF8A;
+  --ntz-warning:         #D4A85A;
+  --ntz-error:           #C87878;
+  --ntz-info:            #A890C8;
+
+  /* Rhetorical highlights */
+  --ntz-amp-bg:          #3A2808;
+  --ntz-amp-text:        #E8B86D;
+
+  --ntz-emo-bg:          #1C2A38;
+  --ntz-emo-text:        #7BAFD4;
+
+  --ntz-load-bg:         #301828;
+  --ntz-load-text:       #C48BB8;
+
+  --ntz-cta-bg:          #301E14;
+  --ntz-cta-text:        #E8906A;
+
+  --ntz-res-bg:          #143028;
+  --ntz-res-text:        #6ABFAA;
+
+  --ntz-pre-bg:          #281630;
+  --ntz-pre-text:        #A88CC8;
+
+  --ntz-hedge-bg:        #1C2418;
+  --ntz-hedge-text:      #90B878;
+}
+
+/* ── LIGHT MODE — Warm Cream ─────────────────────────────── */
+@media (prefers-color-scheme: light) {
+  :root {
+    --ntz-bg:            #FAF6F0;
+    --ntz-surface:       #F0E8D8;
+    --ntz-raised:        #E4D8C4;
+    --ntz-border:        #C8B8A0;
+    --ntz-muted:         #8A7860;
+    --ntz-text:          #4A3828;
+    --ntz-title:         #2A1810;
+
+    --ntz-accent-warm:   #8A4820;
+    --ntz-accent-cool:   #2A5878;
+
+    --ntz-success:       #2A6840;
+    --ntz-warning:       #7A5818;
+    --ntz-error:         #8A2828;
+    --ntz-info:          #4A2878;
+
+    --ntz-amp-bg:        #FFF0CC;
+    --ntz-amp-text:      #7A5000;
+
+    --ntz-emo-bg:        #D8EAF8;
+    --ntz-emo-text:      #1A4888;
+
+    --ntz-load-bg:       #F0DCEA;
+    --ntz-load-text:     #6A2068;
+
+    --ntz-cta-bg:        #FFE8D4;
+    --ntz-cta-text:      #8A3800;
+
+    --ntz-res-bg:        #D4F0E4;
+    --ntz-res-text:      #1A6040;
+
+    --ntz-pre-bg:        #EAE0F8;
+    --ntz-pre-text:      #4A1880;
+
+    --ntz-hedge-bg:      #E0ECD8;
+    --ntz-hedge-text:    #2A4818;
+  }
+}
+
+/* ── FORCED THEMES ───────────────────────────────────────── */
+.ntz-theme-dark {
+  --ntz-bg:#2A1F2E; --ntz-surface:#3A2A40; --ntz-raised:#4A3854;
+  --ntz-border:#6A5478; --ntz-muted:#A090B0; --ntz-text:#C8B8D8; --ntz-title:#E8DDF0;
+  --ntz-amp-bg:#3A2808;   --ntz-amp-text:#E8B86D;
+  --ntz-emo-bg:#1C2A38;   --ntz-emo-text:#7BAFD4;
+  --ntz-load-bg:#301828;  --ntz-load-text:#C48BB8;
+  --ntz-cta-bg:#301E14;   --ntz-cta-text:#E8906A;
+  --ntz-res-bg:#143028;   --ntz-res-text:#6ABFAA;
+  --ntz-pre-bg:#281630;   --ntz-pre-text:#A88CC8;
+  --ntz-hedge-bg:#1C2418; --ntz-hedge-text:#90B878;
+}
+
+.ntz-theme-light {
+  --ntz-bg:#FAF6F0; --ntz-surface:#F0E8D8; --ntz-raised:#E4D8C4;
+  --ntz-border:#C8B8A0; --ntz-muted:#8A7860; --ntz-text:#4A3828; --ntz-title:#2A1810;
+  --ntz-amp-bg:#FFF0CC;  --ntz-amp-text:#7A5000;
+  --ntz-emo-bg:#D8EAF8;  --ntz-emo-text:#1A4888;
+  --ntz-load-bg:#F0DCEA; --ntz-load-text:#6A2068;
+  --ntz-cta-bg:#FFE8D4;  --ntz-cta-text:#8A3800;
+  --ntz-res-bg:#D4F0E4;  --ntz-res-text:#1A6040;
+  --ntz-pre-bg:#EAE0F8;  --ntz-pre-text:#4A1880;
+  --ntz-hedge-bg:#E0ECD8;--ntz-hedge-text:#2A4818;
+}
+
+/* ── HIGHLIGHT CLASSES ───────────────────────────────────── */
+.ntz-amp, .ntz-emo, .ntz-load, .ntz-cta,
+.ntz-res, .ntz-pre, .ntz-hedge {
+  padding: 1px 4px;
+  border-radius: 0;
+}
+.ntz-amp   { background:var(--ntz-amp-bg);   color:var(--ntz-amp-text);   text-decoration:underline 2px solid;  }
+.ntz-emo   { background:var(--ntz-emo-bg);   color:var(--ntz-emo-text);   text-decoration:none;                 }
+.ntz-load  { background:var(--ntz-load-bg);  color:var(--ntz-load-text);  text-decoration:underline 2px dotted; }
+.ntz-cta   { background:var(--ntz-cta-bg);   color:var(--ntz-cta-text);   text-decoration:underline 3px double; }
+.ntz-res   { background:var(--ntz-res-bg);   color:var(--ntz-res-text);   text-decoration:underline 2px wavy;   }
+.ntz-pre   { background:var(--ntz-pre-bg);   color:var(--ntz-pre-text);   text-decoration:underline 2px solid;  }
+.ntz-hedge { background:var(--ntz-hedge-bg); color:var(--ntz-hedge-text); text-decoration:underline 2px dashed; }
+
+/* ── UI COMPONENTS ───────────────────────────────────────── */
+/* Buttons — sharp corners, NTZ brand */
+.ntz-btn {
+  font-family: monospace;
+  font-size: 11px;
+  letter-spacing: 2px;
+  padding: 9px 18px;
+  border: 1px solid var(--ntz-border);
+  background: transparent;
+  color: var(--ntz-text);
+  border-radius: 0;
+  cursor: pointer;
+}
+.ntz-btn:hover    { background: var(--ntz-raised); }
+.ntz-btn-primary  { background: var(--ntz-accent-warm); border-color: var(--ntz-accent-warm); color: var(--ntz-bg); }
+.ntz-btn-resolved { background: var(--ntz-res-bg); border-color: var(--ntz-res-text); color: var(--ntz-res-text); }
+
+/* Resolved box */
+.ntz-resolved-box {
+  background: var(--ntz-res-bg);
+  border: 1px solid var(--ntz-res-text);
+  padding: 12px 16px;
+  border-radius: 0;
+}
+.ntz-resolved-label {
+  font-family: monospace;
+  font-size: 9px;
+  letter-spacing: 2px;
+  color: var(--ntz-res-text);
+  margin-bottom: 6px;
+}
+
+/* Tooltip */
+[data-ntz-label] { position: relative; cursor: default; }
+[data-ntz-label]:hover::after {
+  content: attr(data-ntz-label);
+  position: absolute;
+  bottom: calc(100% + 4px);
+  left: 0;
+  background: var(--ntz-surface);
+  border: 1px solid var(--ntz-border);
+  color: var(--ntz-muted);
+  font-size: 9px;
+  font-family: monospace;
+  letter-spacing: 1px;
+  padding: 3px 7px;
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 100;
+}
