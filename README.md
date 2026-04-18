@@ -1,5 +1,7 @@
 <img width="1500" height="500" alt="image" src="https://github.com/user-attachments/assets/10128d16-8d02-46b4-b36c-bb9d6468e7ed" />
 
+---
+
 **See through the language. Understand what you're really reading.**
 
 Neutralize is a browser extension for Chrome and Firefox that analyzes selected text for rhetorical devices — appeals, structural techniques, and loaded language — and offers a neutral rewrite alongside synonym alternatives. 
@@ -16,60 +18,89 @@ Built with React, TypeScript, and the Claude API.
 
 ---
 
-## What it does
-
-Highlight 3–5 sentences on any article, webpage, or browser-rendered PDF. Neutralize will:
-
-- Color-code rhetorical techniques in the selected text (appeals, structural devices, loaded connotations)
-- Show synonym alternatives with nuance explanations on hover
-- Produce a neutral rewrite of the passage and explain what changed and why
-- Flag pure opinions that can't be neutralized, and identify plain factual statements
-
-
-
 https://github.com/user-attachments/assets/770d8ecb-c82e-44b7-88b3-e4165e9d40fe
-
 
 ---
 
-## How to install
+## What it detects
+
+- **Appeals** — ethos, pathos, logos
+- **Loaded language** — connotation-heavy word choices and emotionally charged phrasing
+- **Structural techniques** — framing, repetition, false equivalence, and more
+- **Pure opinions** — flagged as non-neutralizable
+- **Plain factual statements** — identified and left unchanged
+
+---
+
+## Architecture
+
+```
+neutralize/
+├── extension/          # Chrome MV3 + Firefox MV2 manifests and entry points
+├── packages/
+│   ├── ui/             # React 19 + TypeScript side panel and popup
+│   └── shared/         # Prompt pipeline, API client, type definitions
+├── pages/              # Options / settings pages
+├── store/              # Extension state management
+├── tests/e2e/          # End-to-end test suite
+├── bash-scripts/       # Build and packaging helpers
+└── turbo.json          # Turborepo pipeline config
+```
+
+**Key design decisions:**
+
+- **Monorepo with Turborepo + pnpm workspaces** — separates browser-specific code (extension manifests, background scripts) from shared UI and logic, enabling a single build pipeline that outputs both `dist-chrome/` and `dist-firefox/` targets without duplicating source.
+- **Structured JSON output from Claude API** — the prompt pipeline returns a typed schema: `{ devices: [{ type, span, confidence, explanation }], neutral_rewrite, unchanged_spans }`. Keeping the model output structured (not free-form prose) makes the UI deterministic and testable regardless of which passage is analyzed.
+- **Husky + lint-staged on commit** — enforces consistent code quality across a project designed to be contributed to; GitGuardian integration prevents accidental API key exposure.
+- **Model choice (claude-haiku-4-5)** — latency matters in a side panel context. Haiku keeps response time under 1.5s for typical passages while still returning accurate rhetorical classifications.
+
+---
+
+## Tech Stack
+
+| Layer | Choice |
+|---|---|
+| UI | React 19 + TypeScript |
+| Build | Vite + Turborepo |
+| Extension targets | Chrome MV3, Firefox MV2 |
+| AI | Anthropic Claude API (`claude-haiku-4-5`) |
+| Monorepo | pnpm workspaces |
+| Linting / formatting | ESLint + Prettier |
+
+---
+
+## Getting Started
 
 ### Prerequisites
 
 - Node 18+
-- [pnpm](https://pnpm.io/) (`npm install -g pnpm`)
-- An [Anthropic API key](https://console.anthropic.com/settings/api-keys) (requires a Tier 1 account — $5 minimum credit deposit)
+- [pnpm](https://pnpm.io/) — `npm install -g pnpm`
+- An [Anthropic API key](https://console.anthropic.com/settings/api-keys) (Tier 1 — $5 minimum deposit)
 
-### Steps
+### Install and build
 
 ```bash
-git clone https://github.com/your-username/neutralize.git
+git clone https://github.com/wleejess/neutralize.git
 cd neutralize
+cp .example.env .env          # add your Anthropic API key here
 pnpm install
 pnpm build
 ```
 
-Then load the extension:
+### Load in Chrome
 
-**Chrome:**
 1. Open `chrome://extensions`
 2. Enable **Developer mode** (top right)
-3. Click **Load unpacked**
-4. Select the `dist-chrome/` folder inside the repo
+3. Click **Load unpacked** → select `dist-chrome/`
 
-**Firefox:**
+### Load in Firefox
+
 1. Open `about:debugging#/runtime/this-firefox`
-2. Click **Load Temporary Add-on**
-3. Select any file inside the `dist-firefox/` folder
+2. Click **Load Temporary Add-on** → select any file in `dist-firefox/`
 
 ### Add your API key
 
-After loading the extension:
-
-1. Right-click the Neutralize icon in the toolbar → **Options** (Chrome) or open the popup → **Settings** (Firefox)
-2. Paste your Anthropic API key and click **Save**
-
-The side panel will update automatically — no reload needed.
+After loading: right-click the toolbar icon → **Options** (Chrome) or open the popup → **Settings** (Firefox). Paste your key and save. The side panel updates without a reload.
 
 ---
 
@@ -78,22 +109,11 @@ The side panel will update automatically — no reload needed.
 1. Open any article or webpage
 2. Click the Neutralize toolbar icon to open the side panel
 3. Highlight 3–5 sentences
-4. Read the breakdown in the panel
+4. Read the breakdown in the panel — hover word highlights for synonym alternatives
 
 ---
 
-## Tech stack
+## License
 
-| Layer | Choice |
-|---|---|
-| UI | React 19 + TypeScript |
-| Build | Vite + Turborepo |
-| Extension | Chrome MV3 + Firefox MV2, chrome-extension-boilerplate-react-vite |
-| AI | Anthropic Claude API (`claude-haiku-4-5`) |
-| Font | Instrument Sans (Google Fonts) |
-
-## Style Guide
-<img width="900" height="520" alt="image" src="https://github.com/user-attachments/assets/4999d7a1-6713-4f0b-8e7b-c3699b56bed4" />
-<img width="960" height="580" alt="image" src="https://github.com/user-attachments/assets/a6736ef6-4546-41fe-bc09-6af7608a618c" />
-
+MIT
 
